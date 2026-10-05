@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
   public static void main(String[] args) {
@@ -24,6 +25,12 @@ public class Main {
     System.out.println("Recherche avec titre null : " + bibliotheque.rechercherUnTitre(null));
     System.out.println("Recherche avec titre vide : " + bibliotheque.rechercherUnTitre(""));
     System.out.println("Recherche avec espaces : " + bibliotheque.rechercherUnTitre("   "));
+   
+        afficherResultatsCategorie(bibliotheque, "long");
+        afficherResultatsCategorie(bibliotheque, "moyen");
+        afficherResultatsCategorie(bibliotheque, "inconnue");
+        afficherResultatsCategorie(bibliotheque, null);
+        afficherResultatsCategorie(bibliotheque, "");
 
     System.out.println("Nombre de livres longs : " + bibliotheque.compterLivreLong());
     Livre plusLong = bibliotheque.trouverLivreLePlusLong();
@@ -61,4 +68,16 @@ public class Main {
         ? "La bibliotheque vide ne contient aucun livre"
         : plusLongBibliothequeVide.getTitre());
   }
+
+    private static void afficherResultatsCategorie(Bibliotheque bibliotheque, String categorie) {
+        List<Livre> livresTrouves = bibliotheque.rechercherParCategorie(categorie);
+        System.out.println("\nResultats pour la categorie '" + categorie + "':");
+        if (livresTrouves.isEmpty()) {
+            System.out.println("Aucun livre trouve.");
+            return;
+        }
+        for (Livre livre : livresTrouves) {
+            System.out.println("Titre : " + livre.getTitre());
+        }
+    }
 }

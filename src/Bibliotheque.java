@@ -1,109 +1,99 @@
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bibliotheque {
-  private List<Livre> tab;
+  private final List<Livre> tab;
 
   public Bibliotheque(List<Livre> livres) {
-    ArrayList<Livre> livreTemp = new ArrayList<>();
-    for(Livre livre : livres){
-      livreTemp.add(livre);
-    }
-    this.tab = livreTemp;
+    this.tab = new ArrayList<>(livres);
   }
 
   public void afficher() {
-    for (int i = 0; i < tab.size(); i++) {
-      System.out.println("Titre : " + tab.get(i).getTitre());
-      System.out.println("Categorie : " + tab.get(i).getCategorie());
+    for (Livre livre : tab) {
+      System.out.println("Titre : " + livre.getTitre());
+      System.out.println("Categorie : " + livre.getCategorie());
       System.out.println();
     }
   }
 
   public boolean rechercherUnTitre(String titre) {
-    if (!estTitreValide(titre)) {
+    if (!estTexteValide(titre)) {
+      return false;
+    }
+    for (Livre livre : tab) {
+      if (livre.getTitre().equalsIgnoreCase(titre.trim())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public int compterLivreLong() {
+    int count = 0;
+    for (Livre livre : tab) {
+      if (livre.estLong()) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  public Livre trouverLivreLePlusLong() {
+    if (tab.isEmpty()) {
+      return null;
+    }
+
+    Livre plusLong = tab.get(0);
+    for (int i = 1; i < tab.size(); i++) {
+      if (tab.get(i).getNombrePages() > plusLong.getNombrePages()) {
+        plusLong = tab.get(i);
+      }
+    }
+    return plusLong;
+  }
+
+  public boolean ajouterLivre(Livre nouveauLivre) {
+    if (nouveauLivre == null || !estTexteValide(nouveauLivre.getTitre())) {
+      return false;
+    }
+    if (rechercherUnTitre(nouveauLivre.getTitre())) {
+      return false;
+    }
+    tab.add(nouveauLivre);
+    return true;
+  }
+
+  public boolean supprimerLivre(String titre) {
+    if (!estTexteValide(titre)) {
       return false;
     }
     for (int i = 0; i < tab.size(); i++) {
       if (tab.get(i).getTitre().equalsIgnoreCase(titre.trim())) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  public int compterLivreLong(){
-    int count =0;
-     for(int i= 0; i < tab.size(); i++){
-      if(tab.get(i).estLong()){
-        count +=1;
-      }
-     }
-    return count;
-  }
-
-  public Livre  trouverLivreLePlusLong(){
-    int index =0 ;
-    if(tab.isEmpty()){
-        return null;
-    }
-    int max =tab.get(0).getNombrePages();
-    for(int i= 1; i < tab.size(); i++){
-      if (max < tab.get(i).getNombrePages()){
-        max = tab.get(i).getNombrePages();
-        index = i;
-      }
-    }
-    return tab.get(index) ;
-  }
-
-  public boolean ajouterLivre(Livre nouveauLivre){
-    if(nouveauLivre == null){
-      return false;
-    }
-    if(!estTitreValide(nouveauLivre.getTitre())){
-      return false;
-    }
-    if(rechercherUnTitre(nouveauLivre.getTitre())){
-        return  false;
-    }else{  
-      tab.add(nouveauLivre);
-      return true;
-    }
-  }
-  //Affiche chaque titre de chaque  Livre
-  public void afficherTitre(){
-    for(Livre liv :tab){
-      System.out.println("Titre : "+liv.getTitre());
-    }
-  }
-  public boolean supprimerLivre(String titre){
-    if(!estTitreValide(titre)){
-      return false;
-    }
-    for(int i = 0; i < tab.size(); i++){
-      if(tab.get(i).getTitre().equalsIgnoreCase(titre.trim())){
         tab.remove(i);
         return true;
       }
     }
-
     return false;
-
   }
 
-  public  int getNombreLivres(){
+  public int getNombreLivres() {
     return tab.size();
-
   }
 
-  private boolean estTitreValide(String titre){
-    
-  if( titre==null || titre.isBlank()){
-    return false;
+  private boolean estTexteValide(String texte) {
+    return texte != null && !texte.isBlank();
   }
-  return true;
+
+  public List<Livre> rechercherParCategorie(String categorie) {
+    List<Livre> livresParCategorie = new ArrayList<>();
+    if (!estTexteValide(categorie)) {
+      return livresParCategorie;
+    }
+    for (Livre livre : tab) {
+      if (livre.getCategorie().equalsIgnoreCase(categorie.trim())) {
+        livresParCategorie.add(livre);
+      }
+    }
+    return livresParCategorie;
   }
 }
-
