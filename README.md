@@ -6,20 +6,30 @@ Petit projet Java en ligne de commande pour gérer une bibliothèque de livres.
 
 - Afficher les livres et leur catégorie.
 - Rechercher un titre sans tenir compte des majuscules et minuscules.
-- Ajouter des livres si leur titre est valide et qu’aucun doublon n’existe.
+- Rechercher les livres par catégorie.
+- Ajouter des livres en refusant les titres invalides et les doublons.
 - Supprimer un livre par titre.
 - Compter les livres longs et trouver celui qui a le plus de pages.
-- Gérer une liste indépendante de celle reçue par la bibliothèque.
+- Conserver une copie indépendante de la liste reçue par la bibliothèque.
 
 ## Prérequis
 
-Java 11 ou version ultérieure (testé avec Java 17).
+- Java 17.
+- Maven installé et accessible avec la commande `mvn`.
 
 ## Exécution
 
-Depuis la racine du projet, compiler les fichiers Java puis lancer le programme :
+Depuis la racine du projet, construire le JAR :
 
 ```powershell
-javac src/Bibliotheque.java src/Livre.java src/Main.java
-java -cp src Main
+mvn clean package
+```
+
+Cette commande supprime les anciens fichiers générés, compile le code
+et crée le JAR dans le dossier `target`.
+
+Lancer ensuite l’application :
+
+```powershell
+java -jar target/bibliotheque-java-1.0-SNAPSHOT.jar
 ```
