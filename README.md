@@ -33,3 +33,13 @@ Lancer ensuite l’application :
 ```powershell
 java -jar target/bibliotheque-java-1.0-SNAPSHOT.jar
 ```
+## Tests
+
+Exécuter les tests automatisés :
+
+```powershell
+mvn test
+```
+
+Les tests vérifient l’ajout d’un livre valide, le refus d’un livre null
+et le refus d’un doublon dont le titre contient des espaces autour.
