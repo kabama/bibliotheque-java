@@ -35,7 +35,7 @@ public class BibliothequeTest {
 
          boolean premierAjout = bibliotheque.ajouterLivre(livre);
         assertTrue(premierAjout);
-        
+
         boolean resultat = bibliotheque.ajouterLivre(
                 new Livre(" 1984 ", "George Orwell", 328));
 
