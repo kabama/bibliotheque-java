@@ -64,6 +64,33 @@ public class BibliothequeTest {
         assertEquals(481, bibliotheque.trouverLivreLePlusLong().getNombrePages());
 
     }
+     @Test
+    void supprimerLivreExistant() {
+        ArrayList<Livre> livres = new ArrayList<>();
+        livres.add(new Livre("1984", "George Orwell", 328));
+        Bibliotheque bibliotheque = new Bibliotheque(livres);
+
+        boolean resultat = bibliotheque.supprimerLivre("1984");
+
+        assertTrue(resultat);
+        assertEquals(0, bibliotheque.getNombreLivres());
+        assertFalse(bibliotheque.rechercherUnTitre("1984"));
+    }
+
+    
+    @Test
+    void nePasModifierBibliothequeSiLivreAbsent() {
+        ArrayList<Livre> livres = new ArrayList<>();
+        livres.add(new Livre("1984", "George Orwell", 328));
+        Bibliotheque bibliotheque = new Bibliotheque(livres);
+
+        boolean resultat = bibliotheque.supprimerLivre("Avatar");
+
+        assertFalse(resultat);
+        assertEquals(1, bibliotheque.getNombreLivres());
+        assertTrue(bibliotheque.rechercherUnTitre("1984"));
+    }
+
   
 
        @Test
