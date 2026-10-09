@@ -1,5 +1,6 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -42,5 +43,40 @@ public class BibliothequeTest {
         assertFalse(resultat);
         assertEquals(1, bibliotheque.getNombreLivres());
     }
+
+    
+    @Test
+    void retournerNullPourBibliothequeVide(){
+        ArrayList<Livre> livresVide = new ArrayList<>();
+        Bibliotheque bibliotheque = new Bibliotheque(livresVide);
+        
+        assertNull(bibliotheque.trouverLivreLePlusLong());
+
+
+    }
+    @Test 
+    void retournerLivreAvecLePlusDePages(){
+        ArrayList<Livre> livres = new ArrayList<>();
+        livres.add(new Livre("1984", "George Orwell", 96));
+        livres.add(new Livre("Seigneur des anneaux", "peter", 481));
+        livres.add(new Livre("Henry potter", "mbemba", 328));
+        Bibliotheque bibliotheque = new Bibliotheque(livres);
+        assertEquals(481, bibliotheque.trouverLivreLePlusLong().getNombrePages());
+
+    }
   
+
+       @Test
+    void conserverLivresApresVidageListeSource() {
+        ArrayList<Livre> livresSource = new ArrayList<>();
+        Livre livre = new Livre("1984", "George Orwell", 328);
+        livresSource.add(livre);
+
+        Bibliotheque bibliotheque = new Bibliotheque(livresSource);
+        livresSource.clear();
+
+        assertEquals(1, bibliotheque.getNombreLivres());
+        assertTrue(bibliotheque.rechercherUnTitre("1984"));
+    }
+
 }
