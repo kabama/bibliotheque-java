@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 public class BibliothequeTest {
@@ -104,6 +106,34 @@ public class BibliothequeTest {
 
         assertEquals(1, bibliotheque.getNombreLivres());
         assertTrue(bibliotheque.rechercherUnTitre("1984"));
+    }
+
+    @Test
+    void rechercherUniquementLivresLongs() {
+        ArrayList<Livre> livres = new ArrayList<>();
+        livres.add(new Livre("Livre court", "Auteur 1", 96));
+        livres.add(new Livre("Livre moyen", "Auteur 2", 328));
+        livres.add(new Livre("Livre long", "Auteur 3", 481));
+
+        Bibliotheque bibliotheque = new Bibliotheque(livres);
+        List<Livre> livresLongs = bibliotheque.rechercherParCategorie("long");
+
+        assertEquals(2, livresLongs.size());
+
+        for (Livre livre : livresLongs) {
+            assertTrue(livre.estLong());
+            
+        }
+    }
+
+    @Test 
+    void retournerListeVidePourCategorieInconnue(){
+        ArrayList<Livre> livres = new ArrayList<>();
+        livres.add(new Livre("Livre court", "Auteur 1", 96));
+        Bibliotheque bibliotheque = new Bibliotheque(livres);
+        List<Livre> livresInconnue = bibliotheque.rechercherParCategorie("inconnue");
+        assertTrue(livresInconnue.isEmpty());
+
     }
 
 }
